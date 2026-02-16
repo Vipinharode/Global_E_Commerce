@@ -1,0 +1,127 @@
+<div class="cart-container">
+    <div class="cart-header">
+        <div class="header-left">
+            <h1 class="page-title">Shopping Cart</h1>
+            @if (cartItemCount(); as count) {
+            <span class="item-count-badge">{{ count }} {{ count === 1 ? 'Item' : 'Items' }}</span>
+            }
+        </div>
+        <p-button label="Continue Shopping" icon="pi pi-chevron-left" (onClick)="continueShopping()"
+            styleClass="p-button-sm continue-btn"></p-button>
+    </div>
+
+    @if (cartItems(); as items) {
+    @if (items.length > 0) {
+    <div class="cart-content">
+        <!-- Cart Items List -->
+        <div class="list-container">
+            <div class="cart-items-list">
+                @for (item of items; track item.id) {
+                <div class="cart-item-card glass-card">
+                    <div class="item-visual">
+                        <img [src]="item.image" [alt]="item.title" class="item-thumbnail" />
+                    </div>
+
+                    <div class="item-info">
+                        <div class="item-header">
+                            <div>
+                                <h3 class="item-title">{{ item.title }}</h3>
+                                <p class="item-category">Product ID: #{{ item.productId }}</p>
+                            </div>
+                            <p-button icon="pi pi-trash" [text]="true" severity="danger" (onClick)="removeItem(item.id)"
+                                pTooltip="Remove Item"></p-button>
+                        </div>
+
+                        <div class="item-controls-row">
+                            <div class="price-info">
+                                <span class="unit-price">{{ item.price | appCurrency }}</span>
+                                <span class="price-label">per unit</span>
+                            </div>
+
+                            <div class="quantity-control">
+                                <button class="qty-btn" (click)="updateQuantity(item.id, item.quantity - 1)"
+                                    [disabled]="item.quantity <= 1">
+                                    <i class="pi pi-minus"></i>
+                                </button>
+                                <span class="qty-value">{{ item.quantity }}</span>
+                                <button class="qty-btn" (click)="updateQuantity(item.id, item.quantity + 1)">
+                                    <i class="pi pi-plus"></i>
+                                </button>
+                            </div>
+
+                            <div class="subtotal-info">
+                                <span class="subtotal-value">{{ (item.price * item.quantity) | appCurrency }}</span>
+                                <span class="price-label">Subtotal</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                }
+            </div>
+
+            <div class="list-footer-actions">
+                <p-button label="Clear Shopping Cart" icon="pi pi-trash" (onClick)="clearCart()" severity="danger"
+                    styleClass="p-button-sm clear-btn"></p-button>
+            </div>
+        </div>
+
+        <!-- Cart Summary Sidebar -->
+        <div class="summary-sidebar">
+            <div class="summary-card glass-card sticky-summary">
+                <h2 class="summary-title">Order Summary</h2>
+
+                <div class="summary-details">
+                    <div class="summary-row">
+                        <span class="label">Subtotal</span>
+                        <span class="value">{{ cartTotal() | appCurrency }}</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="label">Estimated Shipping</span>
+                        <span class="value free">FREE</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span class="label">Tax (10%)</span>
+                        <span class="value">{{ (cartTotal() * 0.1) | appCurrency }}</span>
+                    </div>
+
+                    <div class="summary-divider"></div>
+
+                    <div class="summary-row total">
+                        <span class="label">Order Total</span>
+                        <span class="value highlight">{{ (cartTotal() * 1.1) | appCurrency }}</span>
+                    </div>
+                </div>
+
+                <p-button label="Checkout Now" icon="pi pi-shopping-bag" iconPos="right" (onClick)="proceedToCheckout()"
+                    styleClass="p-button-raised w-full checkout-cta"></p-button>
+
+                <div class="payment-guarantee">
+                    <p class="guarantee-text"><i class="pi pi-shield"></i> 100% Secure Checkout</p>
+                    <div class="payment-methods">
+                        <img src="https://img.icons8.com/color/48/000000/visa.png" alt="Visa" />
+                        <img src="https://img.icons8.com/color/48/000000/mastercard.png" alt="Mastercard" />
+                        <img src="https://img.icons8.com/color/48/000000/paypal.png" alt="Paypal" />
+                        <img src="https://img.icons8.com/color/48/000000/google-pay.png" alt="GPay" />
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    } @else {
+    <!-- Empty Cart Experience -->
+    <div class="empty-state-container glass-card">
+        <div class="empty-visual">
+            <div class="cart-icon-wrapper">
+                <i class="pi pi-shopping-cart"></i>
+            </div>
+        </div>
+        <h2>Your Cart is Feeling Lonely</h2>
+        <p>Give it some love by adding your favorite products!</p>
+        <p-button label="Discover Products" icon="pi pi-search" (onClick)="continueShopping()"
+            styleClass="p-button-lg p-button-raised explore-btn"></p-button>
+    </div>
+    }
+    }
+</div>

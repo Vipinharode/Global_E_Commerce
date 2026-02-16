@@ -1,0 +1,102 @@
+<div class="tracking-container" [class.delivered-state]="orderData()?.status === 'delivered'">
+    <!-- Header Section -->
+    <div class="tracking-header">
+        <button class="back-link" (click)="goBack()">
+            <i class="pi pi-arrow-left"></i> Back to Shopping
+        </button>
+        <div class="header-main">
+            <h1 class="page-title">Track Your Order</h1>
+            @if (orderData(); as order) {
+            <div class="order-meta">
+                <span class="order-id">Order #{{ orderId() }}</span>
+                <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)"
+                    styleClass="status-tag"></p-tag>
+            </div>
+            }
+        </div>
+    </div>
+
+    @if (orderData(); as order) {
+    <div class="tracking-grid">
+        <!-- Main Tracking Visualization -->
+        <div class="tracking-main-card glass-card">
+            <div class="card-header">
+                <h2>Real-time Delivery Progress</h2>
+                <div class="tracking-sub">
+                    <i class="pi pi-map-marker"></i>
+                    <span>Tracking Number: <strong>{{ order.trackingNumber }}</strong></span>
+                </div>
+            </div>
+
+            <div class="timeline-container">
+                <p-timeline [value]="trackingEvents()" align="left" styleClass="customized-timeline">
+                    <ng-template pTemplate="marker" let-event>
+                        <span class="custom-marker" [style.backgroundColor]="event.color"
+                            [class.completed]="event.completed">
+                            <i [class]="event.icon"></i>
+                        </span>
+                    </ng-template>
+                    <ng-template pTemplate="content" let-event>
+                        <div class="timeline-content" [class.pending]="!event.completed">
+                            <h3 class="status-label">{{ event.status }}</h3>
+                            <p class="status-desc">{{ event.description }}</p>
+                            @if (event.completed) {
+                            <span class="status-date">{{ event.date }}</span>
+                            }
+                        </div>
+                    </ng-template>
+                </p-timeline>
+            </div>
+        </div>
+
+        <!-- Order Sidebar Info -->
+        <div class="tracking-sidebar">
+            <!-- Shipping Info -->
+            <div class="side-card glass-card">
+                <h3>Shipping Destination</h3>
+                <div class="address-box">
+                    <div class="user-info">
+                        <strong>{{ order.shippingAddress.fullName }}</strong>
+                        <p>{{ order.shippingAddress.phone }}</p>
+                    </div>
+                    <div class="location-info">
+                        <p>{{ order.shippingAddress.street }}</p>
+                        <p>{{ order.shippingAddress.city }}, {{ order.shippingAddress.state }} {{
+                            order.shippingAddress.zipCode }}</p>
+                        <p>{{ order.shippingAddress.country }}</p>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Delivery Stats -->
+            <div class="side-card stats-card glass-card">
+                <div class="stat-item">
+                    <span class="stat-label">Estimated Delivery</span>
+                    <span class="stat-value">{{ order.estimatedDelivery | date:'mediumDate' }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Order Total</span>
+                    <span class="stat-value">{{ order.total | appCurrency }}</span>
+                </div>
+                <div class="stat-divider"></div>
+                <div class="stat-item">
+                    <span class="stat-label">Shipping Method</span>
+                    <span class="stat-value">FedEx/UPS</span>
+                </div>
+            </div>
+
+            <!-- Support -->
+            <div class="sidebar-help">
+                <p>Have questions about your delivery?</p>
+                <p-button label="Help Center" [text]="true" icon="pi pi-external-link"></p-button>
+            </div>
+        </div>
+    </div>
+    } @else {
+    <div class="loading-state">
+        <i class="pi pi-spin pi-spinner"></i>
+        <p>Loading tracking information...</p>
+    </div>
+    }
+</div>

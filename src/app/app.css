@@ -1,0 +1,900 @@
+.app-container {
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+}
+
+/* Header Styles */
+.app-header {
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    margin: 1rem 1rem 0 1rem;
+    background: rgba(255, 255, 255, 0.95);
+    backdrop-filter: blur(10px);
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.header-content {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 1rem 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+/* Logo */
+.logo-section .logo {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    text-decoration: none;
+    transition: var(--transition);
+}
+
+.logo:hover {
+    transform: scale(1.05);
+}
+
+.logo i {
+    font-size: 2.5rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-text {
+    display: flex;
+    flex-direction: column;
+    line-height: 1.2;
+}
+
+.logo-main {
+    font-size: 1.5rem;
+    font-weight: bold;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    -webkit-text-fill-color: transparent;
+}
+
+.logo-sub {
+    font-size: 0.875rem;
+    color: #6B7280;
+    font-weight: 500;
+}
+
+/* Filters in Header */
+.header-filters {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    flex: 1;
+    margin: 0 3rem;
+    max-width: 800px;
+}
+
+.header-filters .search-container {
+    position: relative;
+    flex: 1;
+}
+
+.header-filters .search-container i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: #94a3b8;
+    z-index: 10;
+    pointer-events: none;
+}
+
+.header-filters .search-container input {
+    width: 100%;
+    height: 44px !important;
+    padding: 0 1rem 0 2.75rem !important;
+    border-radius: 12px;
+    border: 1.5px solid #e2e8f0;
+    transition: all 0.2s;
+    background: #ffffff;
+}
+
+.header-filters .search-container input:focus {
+    border-color: var(--primary-color);
+    background: #ffffff;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08);
+    outline: none;
+}
+
+.filter-actions {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+/* Standard PrimeNG Select Styles */
+::ng-deep .p-select {
+    border-radius: 12px !important;
+    background: #ffffff !important;
+    border: 1.5px solid #e2e8f0 !important;
+    height: 44px !important;
+    min-width: 160px !important;
+    display: flex !important;
+    align-items: center !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    cursor: pointer !important;
+}
+
+::ng-deep .p-select-label-container {
+    background: #ffffff !important;
+}
+
+::ng-deep .p-select:hover {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.08) !important;
+}
+
+::ng-deep .p-select-label {
+    padding: 0 1rem !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+}
+
+::ng-deep .p-select-dropdown {
+    width: 32px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    color: #94a3b8 !important;
+}
+
+/* Dropdown Panel Styling - Specific for p-select */
+::ng-deep .p-select-panel {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15),
+        0 10px 10px -5px rgba(0, 0, 0, 0.08),
+        0 0 0 1px rgba(79, 70, 229, 0.05) !important;
+    margin-top: 8px !important;
+    padding: 0.5rem !important;
+    z-index: 2200 !important;
+    min-width: 220px !important;
+    max-height: 400px !important;
+    overflow: auto !important;
+}
+
+/* User Menu Popover - Different from select panels */
+::ng-deep .p-popover {
+    background: #ffffff !important;
+    border: 1px solid #e2e8f0 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04) !important;
+    margin-top: 12px !important;
+    padding: 0.5rem !important;
+    z-index: 2200 !important;
+}
+
+/* Specific p-popover content reset */
+::ng-deep .p-popover-content {
+    background: transparent !important;
+    padding: 0 !important;
+}
+
+::ng-deep .p-popover:before,
+::ng-deep .p-popover:after {
+    display: none !important;
+    /* Hide default arrow to keep it clean */
+}
+
+::ng-deep .p-select-list {
+    padding: 0.5rem !important;
+    background: #ffffff !important;
+    max-height: 300px !important;
+    overflow-y: auto !important;
+}
+
+/* Scrollbar styling for dropdown */
+::ng-deep .p-select-list::-webkit-scrollbar {
+    width: 6px;
+}
+
+::ng-deep .p-select-list::-webkit-scrollbar-track {
+    background: #f1f5f9;
+    border-radius: 10px;
+}
+
+::ng-deep .p-select-list::-webkit-scrollbar-thumb {
+    background: #cbd5e1;
+    border-radius: 10px;
+}
+
+::ng-deep .p-select-list::-webkit-scrollbar-thumb:hover {
+    background: #94a3b8;
+}
+
+::ng-deep .p-select-item {
+    margin: 2px 0 !important;
+    padding: 0.875rem 1rem !important;
+    border-radius: 10px !important;
+    font-size: 0.875rem !important;
+    font-weight: 600 !important;
+    color: #475569 !important;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    background: #ffffff !important;
+    cursor: pointer !important;
+}
+
+::ng-deep .p-select-item:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%) !important;
+    color: var(--primary-color) !important;
+    transform: translateX(2px) !important;
+}
+
+::ng-deep .p-select-item.p-highlight {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    color: white !important;
+    font-weight: 700 !important;
+}
+
+::ng-deep .p-select-item.p-highlight:hover {
+    transform: translateX(0) !important;
+    opacity: 0.95;
+}
+
+/* Internal alignment for currency template */
+::ng-deep .header-select .fi {
+    width: 20px !important;
+    height: 15px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 1px 3px rgba(0, 0, 0, 0.15);
+    flex-shrink: 0;
+}
+
+::ng-deep .header-select .p-select-label .flex {
+    line-height: 1;
+    display: flex;
+    align-items: center;
+}
+
+/* Specific fix for dropdown flex items */
+::ng-deep .p-select-item .flex {
+    display: flex !important;
+    align-items: center !important;
+    gap: 0.875rem !important;
+}
+
+/* Flag icons in dropdown items */
+::ng-deep .p-select-item .fi {
+    width: 24px !important;
+    height: 18px !important;
+    border-radius: 3px !important;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    flex-shrink: 0;
+}
+
+/* Empty state for select */
+::ng-deep .p-select-empty-message {
+    padding: 1rem !important;
+    text-align: center !important;
+    color: #94a3b8 !important;
+    font-size: 0.875rem !important;
+}
+
+/* Navigation */
+.nav-section {
+    display: flex;
+    gap: 1.5rem;
+    align-items: center;
+}
+
+.nav-link {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1.5rem;
+    text-decoration: none;
+    color: #374151;
+    font-weight: 600;
+    border-radius: 12px;
+    transition: var(--transition);
+    position: relative;
+    background: none;
+    border: none;
+    cursor: pointer;
+    font-family: inherit;
+}
+
+.nav-link i {
+    font-size: 1.25rem;
+}
+
+.nav-link:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    color: var(--primary-color);
+    transform: translateY(-2px);
+}
+
+.nav-link.active {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+}
+
+.cart-link {
+    position: relative;
+}
+
+.cart-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background: linear-gradient(135deg, #EF4444 0%, #DC2626 100%);
+    color: white;
+    font-size: 0.75rem;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 12px;
+    min-width: 20px;
+    text-align: center;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+}
+
+/* User Section */
+.user-section .user-button {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    padding: 0.5rem 1rem;
+    background: transparent;
+    border: 2px solid #E5E7EB;
+    border-radius: 50px;
+    cursor: pointer;
+    transition: var(--transition);
+}
+
+.user-button:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.1) 0%, rgba(124, 58, 237, 0.1) 100%);
+    border-color: var(--primary-color);
+}
+
+.user-name {
+    font-weight: 600;
+    color: #374151;
+}
+
+/* Main Content */
+.main-content {
+    flex: 1;
+    padding: 2rem 1rem;
+    max-width: 1600px;
+    width: 100%;
+    margin: 0 auto;
+}
+
+/* Footer */
+.app-footer {
+    margin: 0 1rem 1rem 1rem;
+    background: rgba(255, 255, 255, 0.95);
+}
+
+.footer-content {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 2rem;
+    padding: 3rem 2rem;
+    max-width: 1600px;
+    margin: 0 auto;
+}
+
+.footer-section h3 {
+    font-size: 1.125rem;
+    font-weight: 700;
+    color: #1F2937;
+    margin-bottom: 1rem;
+}
+
+.footer-section p {
+    color: #6B7280;
+    line-height: 1.6;
+}
+
+.footer-section a {
+    display: block;
+    color: #6B7280;
+    text-decoration: none;
+    margin-bottom: 0.5rem;
+    transition: var(--transition);
+}
+
+.footer-section a:hover {
+    color: var(--primary-color);
+    transform: translateX(5px);
+}
+
+.social-links {
+    display: flex;
+    gap: 1rem;
+}
+
+.social-links a {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 40px;
+    height: 40px;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    color: white;
+    border-radius: 50%;
+    transition: var(--transition);
+}
+
+.social-links a:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 10px 20px rgba(79, 70, 229, 0.3);
+}
+
+.footer-bottom {
+    text-align: center;
+    padding: 1.5rem 2rem;
+    border-top: 1px solid #E5E7EB;
+    color: #6B7280;
+}
+
+.footer-bottom p {
+    margin: 0.25rem 0;
+}
+
+/* 6. Buy Now Standard Button Styling - Light Theme */
+::ng-deep .buy-now-standard.p-button {
+    background: rgba(79, 70, 229, 0.08) !important;
+    /* Very light blue tint */
+    border: 1px solid rgba(79, 70, 229, 0.1) !important;
+    border-radius: 10px !important;
+    padding: 0.5rem 1.25rem !important;
+    font-size: 0.85rem !important;
+    font-weight: 800 !important;
+    color: var(--primary-color) !important;
+    /* Bold blue text */
+    height: 38px !important;
+    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    box-shadow: none !important;
+}
+
+::ng-deep .buy-now-standard.p-button:hover {
+    background: var(--primary-color) !important;
+    /* Fill on hover */
+    color: white !important;
+    transform: translateY(-2px) !important;
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2) !important;
+}
+
+::ng-deep .buy-now-standard.p-button .p-button-icon {
+    color: var(--primary-color) !important;
+    transition: color 0.3s;
+}
+
+::ng-deep .buy-now-standard.p-button:hover .p-button-icon {
+    color: white !important;
+}
+
+.flex-spacer {
+    flex: 1;
+}
+
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 1rem;
+    }
+
+    .nav-section {
+        gap: 1rem;
+    }
+
+    .nav-link span {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 0.75rem;
+    }
+
+    .user-name {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        margin: 0.5rem 0.5rem 0 0.5rem;
+    }
+
+    .header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .logo-section {
+        flex: 1;
+    }
+
+    .nav-section {
+        order: 3;
+        width: 100%;
+        justify-content: space-around;
+        padding-top: 1rem;
+        border-top: 1px solid #E5E7EB;
+    }
+
+    .user-section {
+        order: 2;
+    }
+
+    .main-content {
+        padding: 1rem 0.5rem;
+    }
+
+    .app-footer {
+        margin: 0 0.5rem 0.5rem 0.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+    }
+}
+
+/* Watchlist Popup Styling */
+.watchlist-popup {
+    width: 350px;
+    max-height: 500px;
+    display: flex;
+    flex-direction: column;
+}
+
+.popup-header {
+    padding: 1rem;
+    border-bottom: 1px solid #f1f5f9;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.popup-header h3 {
+    margin: 0;
+    font-size: 1.1rem;
+    font-weight: 700;
+    color: #1e293b;
+}
+
+.items-count {
+    font-size: 0.85rem;
+    color: #94a3b8;
+    font-weight: 600;
+}
+
+.popup-content {
+    flex: 1;
+    overflow-y: auto;
+    padding: 0.5rem;
+}
+
+.watchlist-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    padding: 0.75rem;
+    border-radius: 12px;
+    transition: all 0.2s;
+    cursor: default;
+}
+
+.watchlist-item:hover {
+    background: #f8fafc;
+}
+
+.item-img {
+    width: 60px;
+    height: 60px;
+    object-fit: contain;
+    background: white;
+    padding: 0.5rem;
+    border-radius: 8px;
+    border: 1px solid #f1f5f9;
+}
+
+.item-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+}
+
+.item-title {
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #334155;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.item-price {
+    font-size: 0.85rem;
+    font-weight: 700;
+    color: var(--primary-color);
+    margin-top: 2px;
+}
+
+.remove-btn {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    border: none;
+    background: transparent;
+    color: #94a3b8;
+    cursor: pointer;
+    transition: all 0.2s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.remove-btn:hover {
+    background: #fee2e2;
+    color: #ef4444;
+}
+
+.empty-watchlist {
+    padding: 3rem 1rem;
+    text-align: center;
+    color: #94a3b8;
+}
+
+.empty-watchlist i {
+    font-size: 3rem;
+    margin-bottom: 1rem;
+    opacity: 0.3;
+}
+
+.empty-watchlist p {
+    margin: 0;
+    font-weight: 600;
+}
+
+.wishlist-btn.active {
+    background: #ffffff !important;
+    color: #ef4444 !important;
+    border-color: #fee2e2 !important;
+}
+
+.wishlist-btn.active i {
+    color: #ef4444 !important;
+}
+
+/* User Menu Dropdown Styles */
+.user-chevron {
+    font-size: 0.75rem;
+    color: #94a3b8;
+    transition: transform 0.3s;
+}
+
+.user-button:hover .user-chevron {
+    transform: rotate(180deg);
+}
+
+.user-menu-popup {
+    width: 280px;
+    padding: 0;
+}
+
+.menu-header {
+    padding: 1.25rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.05) 0%, rgba(124, 58, 237, 0.05) 100%);
+    border-radius: 14px 14px 0 0;
+}
+
+.menu-user-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    gap: 0.25rem;
+}
+
+.menu-user-name {
+    font-weight: 700;
+    font-size: 1rem;
+    color: #1e293b;
+}
+
+.menu-user-email {
+    font-size: 0.8rem;
+    color: #64748b;
+}
+
+.menu-divider {
+    height: 1px;
+    background: #e2e8f0;
+    margin: 0.5rem 0;
+}
+
+.menu-items {
+    padding: 0.5rem;
+}
+
+.menu-item {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 0.875rem;
+    padding: 0.875rem 1rem;
+    background: transparent;
+    border: none;
+    border-radius: 10px;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #475569;
+    cursor: pointer;
+    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    text-align: left;
+    font-family: inherit;
+}
+
+.menu-item i {
+    font-size: 1.1rem;
+    color: #94a3b8;
+    transition: all 0.2s;
+}
+
+.menu-item:hover {
+    background: linear-gradient(135deg, rgba(79, 70, 229, 0.08) 0%, rgba(124, 58, 237, 0.08) 100%);
+    color: var(--primary-color);
+    transform: translateX(4px);
+}
+
+.menu-item:hover i {
+    color: var(--primary-color);
+}
+
+.menu-item.logout {
+    color: #ef4444;
+}
+
+.menu-item.logout i {
+    color: #ef4444;
+}
+
+.menu-item.logout:hover {
+    background: rgba(239, 68, 68, 0.1);
+    color: #dc2626;
+}
+
+.menu-item.logout:hover i {
+    color: #dc2626;
+}
+
+::ng-deep .menu-avatar {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    color: white !important;
+}
+
+/* Auth Buttons */
+.auth-buttons {
+    display: flex;
+    gap: 0.75rem;
+    align-items: center;
+}
+
+.login-btn,
+.signup-btn {
+    padding: 0.5rem 1rem;
+    border-radius: 50px;
+    font-weight: 600;
+    font-size: 0.875rem;
+    cursor: pointer;
+    transition: all 0.2s;
+    font-family: inherit;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.login-btn {
+    background: transparent;
+    border: 2px solid #e2e8f0;
+    color: #475569;
+}
+
+.login-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(79, 70, 229, 0.05);
+}
+
+.signup-btn {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    border: none;
+    color: white;
+    box-shadow: 0 4px 12px rgba(79, 70, 229, 0.25);
+}
+
+.signup-btn:hover {
+    transform: translateY(-2px);
+    box-shadow: 0 8px 20px rgba(79, 70, 229, 0.35);
+}
+
+/* User Role Badge */
+.menu-user-role.badge {
+    display: inline-block;
+    padding: 0.15rem 0.5rem;
+    background: rgba(79, 70, 229, 0.1);
+    color: var(--primary-color);
+    border-radius: 4px;
+    font-size: 0.7rem;
+    font-weight: 700;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    width: fit-content;
+    margin-top: 0.25rem;
+}
+
+/* Responsive updates for auth buttons */
+@media (max-width: 640px) {
+    .auth-buttons {
+        gap: 0.5rem;
+    }
+
+    .signup-btn span,
+    .login-btn span {
+        display: none;
+    }
+
+    .signup-btn,
+    .login-btn {
+        padding: 0;
+        border-radius: 50%;
+        width: 36px;
+        height: 36px;
+        justify-content: center;
+    }
+
+    /* Force icon size */
+    .signup-btn::before {
+        content: '\e9ba';
+        /* pi-user-plus */
+        font-family: 'primeicons';
+        font-size: 1.1rem;
+    }
+
+    /* Remove original content from button to just show icon via ::before or handle differently */
+    /* Actually better approach: */
+}
+
+@media (max-width: 640px) {
+
+    .signup-btn span,
+    .login-btn span {
+        display: none;
+    }
+
+    .signup-btn,
+    .login-btn {
+        padding: 0;
+        width: 36px;
+        height: 36px;
+        border-radius: 50%;
+        justify-content: center;
+    }
+
+    .signup-btn i::before {
+        content: "\e9ba";
+        /* pi-user-plus */
+    }
+}

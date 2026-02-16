@@ -1,0 +1,211 @@
+<div class="admin-dashboard-wrapper">
+    <div class="header-section">
+        <h1>Admin Dashboard</h1>
+        <p>Overview of your store's performance</p>
+    </div>
+
+    @if (error()) {
+    <div class="error-container"
+        style="display: flex; flex-direction: column; align-items: center; justify-content: center; height: 300px; text-align: center;">
+        <i class="pi pi-exclamation-circle" style="font-size: 3rem; color: #ef4444; margin-bottom: 1rem;"></i>
+        <h2 style="margin-bottom: 0.5rem; color: #1e293b;">Something went wrong</h2>
+        <p style="color: #64748b; margin-bottom: 1.5rem;">{{ error() }}</p>
+        <p-button label="Try Again" icon="pi pi-refresh" (onClick)="reload()"></p-button>
+    </div>
+    } @else if (metrics(); as metrics) {
+    <div class="dashboard-content">
+        <!-- Key Metrics Cards Row -->
+        <div class="metrics-row">
+            <div class="metric-card revenue">
+                <div class="icon-circle revenue-icon">
+                    <i class="pi pi-dollar"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Total Revenue</h3>
+                    <p class="metric-value">{{ metrics.totalRevenue | appCurrency }}</p>
+                    <span class="trend up"><i class="pi pi-arrow-up"></i> +12% vs last month</span>
+                </div>
+            </div>
+
+            <div class="metric-card users">
+                <div class="icon-circle users-icon">
+                    <i class="pi pi-users"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Active Users</h3>
+                    <p class="metric-value">{{ metrics.activeUsers }}</p>
+                    <span class="trend up"><i class="pi pi-arrow-up"></i> +5 new today</span>
+                </div>
+            </div>
+
+            <div class="metric-card inventory" [class.warning-state]="metrics.stockInventory.lowStockCount > 0">
+                <div class="icon-circle stock-icon">
+                    <i class="pi pi-box"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Inventory Status</h3>
+                    <p class="metric-value">{{ metrics.stockInventory.lowStockCount }}</p>
+                    <span class="sub-label">Low Stock Items</span>
+                </div>
+            </div>
+
+            <div class="metric-card stock-total">
+                <div class="icon-circle total-stock-icon">
+                    <i class="pi pi-database"></i>
+                </div>
+                <div class="metric-info">
+                    <h3>Total Stock</h3>
+                    <p class="metric-value">{{ metrics.stockInventory.total }}</p>
+                    <span class="sub-label">Units Available</span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Charts Layout -->
+        <div class="charts-grid">
+            <div class="chart-card pie-chart">
+                <div class="card-header">
+                    <h3>Top Categories</h3>
+                </div>
+                <highcharts-chart [options]="pieOptions()" style="width: 100%; height: 350px; display: block;">
+                </highcharts-chart>
+            </div>
+
+            <div class="chart-card bar-chart">
+                <div class="card-header">
+                    <h3>Orders by Country</h3>
+                </div>
+                <highcharts-chart [options]="barOptions()" style="width: 100%; height: 350px; display: block;">
+                </highcharts-chart>
+            </div>
+        </div>
+
+        <!-- Best Sellers -->
+        <div class="table-card best-sellers">
+            <div class="card-header">
+                <h3>Best Selling Products</h3>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>Product</th>
+                            <th>Category</th>
+                            <th>Rating</th>
+                            <th>Price</th>
+                            <th>Stock Status</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (product of metrics.bestSellers | slice:productFirst():(productFirst() + productRows());
+                        track product.id) {
+                        <tr>
+                            <td class="product-col">
+                                <div class="product-cell">
+                                    <img [src]="product.thumbnail" [alt]="product.title">
+                                    <div class="product-details">
+                                        <span class="product-name">{{ product.title }}</span>
+                                        <span class="sku">ID: #{{ product.id }}</span>
+                                    </div>
+                                </div>
+                            </td>
+                            <td><span class="category-badge">{{ product.category }}</span></td>
+                            <td>
+                                <div class="rating-stars">
+                                    <i class="pi pi-star-fill text-warning"></i>
+                                    <span>{{ product.rating.rate }}</span>
+                                </div>
+                            </td>
+                            <td class="price-col">{{ product.price | appCurrency }}</td>
+                            <td>
+                                <span class="stock-badge" [class.low]="product.stock < 10"
+                                    [class.ok]="product.stock >= 10">
+                                    {{ product.stock }} In Stock
+                                </span>
+                            </td>
+                        </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <p-paginator (onPageChange)="onProductPageChange($event)" [first]="productFirst()" [rows]="productRows()"
+                [totalRecords]="metrics.bestSellers.length" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
+        </div>
+
+        <!-- Recent Users -->
+        <div class="table-card recent-users" style="margin-top: 24px;">
+            <div class="card-header">
+                <h3>Active Users</h3>
+            </div>
+            <div class="table-responsive">
+                <table>
+                    <thead>
+                        <tr>
+                            <th>User</th>
+                            <th>Email</th>
+                            <th>Location</th>
+                            <th>Role</th>
+                            <th>Status</th>
+                            <th>Actions</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @for (user of metrics.users | slice:userFirst():(userFirst() + userRows()); track user.id) {
+                        @if (user.username !== currentUser?.username) {
+                        <tr>
+                            <td>
+                                <div class="flex align-items-center gap-3"
+                                    style="display: flex; align-items: center; gap: 12px;">
+                                    <img [src]="user.image" [alt]="user.username"
+                                        style="width: 40px; height: 40px; border-radius: 50%; object-fit: cover; border: 2px solid #fff; box-shadow: 0 2px 4px rgba(0,0,0,0.1);">
+                                    <div>
+                                        <div style="font-weight: 600; color: #1e293b;">{{ user.firstName }} {{
+                                            user.lastName }}</div>
+                                        <div style="font-size: 0.85rem; color: #64748b;">@{{ user.username }}</div>
+                                    </div>
+                                </div>
+                            </td>
+                            <td style="color: #475569;">{{ user.email }}</td>
+                            <td>
+                                <div style="display: flex; align-items: center; gap: 8px;">
+                                    <span style="font-size: 0.9rem; color: #475569;">{{ user.country || 'USA' }}</span>
+                                </div>
+                            </td>
+                            <td>
+                                <span [style.background]="user.role === 'admin' ? '#dbeafe' : '#f1f5f9'"
+                                    [style.color]="user.role === 'admin' ? '#1e40af' : '#475569'"
+                                    style="padding: 4px 12px; border-radius: 9999px; font-size: 0.85rem; font-weight: 500; text-transform: capitalize;">
+                                    {{ user.role || 'Customer' }}
+                                </span>
+                            </td>
+                            <td>
+                                <span
+                                    style="display: inline-flex; align-items: center; gap: 6px; color: #16a34a; font-size: 0.85rem; font-weight: 500;">
+                                    <span
+                                        style="width: 8px; height: 8px; background: #16a34a; border-radius: 50%;"></span>
+                                    Active
+                                </span>
+                            </td>
+                            <td>
+                                <button (click)="deleteUser(user.id)" class="delete-btn" title="Delete User">
+                                    <i class="pi pi-trash"></i>
+                                </button>
+                            </td>
+                        </tr>
+                        }
+                        }
+                    </tbody>
+                </table>
+            </div>
+            <p-paginator (onPageChange)="onUserPageChange($event)" [first]="userFirst()" [rows]="userRows()"
+                [totalRecords]="metrics.users.length" [rowsPerPageOptions]="[5, 10, 20]"></p-paginator>
+        </div>
+    </div>
+    } @else {
+    <!-- Loading State -->
+    <div class="loading-overlay">
+        <div class="spinner"></div>
+        <p>Synthesizing Admin Data...</p>
+    </div>
+    }
+</div>

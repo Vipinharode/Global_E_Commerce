@@ -1,0 +1,90 @@
+<div class="confirmation-container">
+    <div class="confirmation-card glass-card">
+        <!-- Success Animation -->
+        <div class="success-visual">
+            <div class="pulse-circle"></div>
+            <div class="checkmark-circle">
+                <i class="pi pi-check"></i>
+            </div>
+        </div>
+
+        <div class="confirmation-header">
+            <h1 class="confirmation-title">Order Confirmed!</h1>
+            <p class="confirmation-subtitle">
+                Thank you for your purchase. We've sent a detailed confirmation to your email.
+            </p>
+        </div>
+
+        <!-- Essential Order Info -->
+        <div class="order-summary-grid">
+            <div class="info-card">
+                <div class="icon-box">
+                    <i class="pi pi-box"></i>
+                </div>
+                <div class="details">
+                    <span class="label">Order Number</span>
+                    <span class="value">#{{ orderId }}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="icon-box">
+                    <i class="pi pi-calendar"></i>
+                </div>
+                <div class="details">
+                    <span class="label">Estimated Delivery</span>
+                    <span class="value">{{ (currentDate + 5*24*60*60*1000) | date:'mediumDate' }}</span>
+                </div>
+            </div>
+
+            <div class="info-card">
+                <div class="icon-box">
+                    <i class="pi pi-map-marker"></i>
+                </div>
+                <div class="details">
+                    <span class="label">Shipping Status</span>
+                    <span class="value status-pill">Preparing</span>
+                </div>
+            </div>
+        </div>
+
+        <div class="action-divider"></div>
+
+        <div class="action-buttons">
+            <p-button label="Track Your Order" icon="pi pi-map-marker" (onClick)="trackOrder()"
+                styleClass="p-button-raised track-cta"></p-button>
+
+            <p-button label="Continue Shopping" icon="pi pi-shopping-bag" (onClick)="continueShopping()"
+                styleClass="p-button-sm continue-cta"></p-button>
+        </div>
+
+        <!-- Next Steps & Support -->
+        <div class="footer-info">
+            <div class="next-steps-section">
+                <h3>What's Next?</h3>
+                <div class="steps-grid">
+                    <div class="step-item">
+                        <span class="step-num">01</span>
+                        <p>Our team will verify your payment and start processing your order.</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">02</span>
+                        <p>You'll receive a tracking number once your items are shipped.</p>
+                    </div>
+                    <div class="step-item">
+                        <span class="step-num">03</span>
+                        <p>Your order will arrive within 5-7 business days at your doorstep.</p>
+                    </div>
+                </div>
+            </div>
+
+            <div class="support-footer">
+                <div class="help-text">
+                    <i class="pi pi-question-circle"></i>
+                    <span>Need help with your order?</span>
+                </div>
+                <a href="mailto:support@globalshop.com" class="support-link">Contact Support</a>
+            </div>
+        </div>
+    </div>
+</div>

@@ -1,0 +1,164 @@
+<div class="product-detail-container">
+    @if (loading()) {
+    <div class="loading-skeleton glass-card">
+        <div class="skeleton-grid">
+            <div class="skeleton-image">
+                <p-skeleton width="100%" height="500px"></p-skeleton>
+            </div>
+            <div class="skeleton-info">
+                <p-skeleton width="60%" height="2rem" styleClass="mb-3"></p-skeleton>
+                <p-skeleton width="40%" height="1.5rem" styleClass="mb-4"></p-skeleton>
+                <p-skeleton width="100%" height="1rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="100%" height="1rem" styleClass="mb-2"></p-skeleton>
+                <p-skeleton width="80%" height="1rem" styleClass="mb-4"></p-skeleton>
+                <p-skeleton width="30%" height="3rem"></p-skeleton>
+            </div>
+        </div>
+    </div>
+    } @else {
+    @if (product(); as product) {
+    <!-- Breadcrumb -->
+    <div class="breadcrumb">
+        <p-button icon="pi pi-arrow-left" label="Back to Catalog" (onClick)="goBack()" styleClass="back-button"
+            [outlined]="true" severity="secondary"></p-button>
+    </div>
+
+    <div class="product-detail-grid">
+        <!-- Product Images -->
+        <div class="product-images glass-card">
+            <div class="main-image">
+                <img [src]="selectedImage() || product.image" [alt]="product.title" />
+            </div>
+            <div class="image-thumbnails">
+                @for (img of product.images; track img) {
+                <div class="thumbnail" [class.active]="selectedImage() === img" (click)="selectImage(img)">
+                    <img [src]="img" [alt]="product.title" />
+                </div>
+                }
+            </div>
+        </div>
+
+        <!-- Product Info -->
+        <div class="product-info glass-card">
+            @if (product.brand) {
+            <div class="product-brand-badge">{{ product.brand }}</div>
+            }
+
+            <h1 class="product-title">{{ product.title }}</h1>
+
+            <div class="product-rating-section">
+                <p-rating [ngModel]="product.rating.rate" [readonly]="true"></p-rating>
+                <span class="rating-text">
+                    {{ product.rating.rate }} ({{ product.rating.count }} reviews)
+                </span>
+            </div>
+
+            <div class="product-price-section">
+                <div class="price-container">
+                    <div class="price-tag">
+                        <span class="price-label">Price:</span>
+                        <span class="price-value">{{ product.price | appCurrency }}</span>
+                    </div>
+                    @if (product.discountPercentage) {
+                    <div class="discount-badge">
+                        -{{ product.discountPercentage }}% OFF
+                    </div>
+                    }
+                </div>
+                <div class="stock-badge" [class.out-of-stock]="product.availabilityStatus === 'Out of Stock'">
+                    <i
+                        [class]="product.availabilityStatus === 'Out of Stock' ? 'pi pi-times-circle' : 'pi pi-check-circle'"></i>
+                    {{ product.availabilityStatus || 'In Stock' }}
+                </div>
+            </div>
+
+            <div class="product-description">
+                <h3>About this product</h3>
+                <p>{{ product.description }}</p>
+            </div>
+
+            <div class="action-row">
+                <div class="quantity-section">
+                    <label>Qty</label>
+                    <div class="quantity-controls">
+                        <p-button icon="pi pi-minus" (onClick)="decrementQuantity()"
+                            [disabled]="quantity() <= 1"></p-button>
+                        <span class="quantity-value">{{ quantity() }}</span>
+                        <p-button icon="pi pi-plus" (onClick)="incrementQuantity()"></p-button>
+                    </div>
+                </div>
+
+                <div class="action-buttons">
+                    <p-button label="Add to Cart" icon="pi pi-shopping-cart" (onClick)="addToCart(product)"
+                        styleClass="add-cart-btn" [disabled]="product.stock === 0"></p-button>
+                    <p-button label="Buy Now" (onClick)="buyNow(product)" styleClass="buy-now-btn"
+                        [disabled]="product.stock === 0"></p-button>
+                </div>
+            </div>
+
+            <div class="product-info-grid">
+                @if (product.shippingInformation) {
+                <div class="info-card">
+                    <i class="pi pi-truck"></i>
+                    <strong>Shipping</strong>
+                    <p>{{ product.shippingInformation }}</p>
+                </div>
+                }
+                @if (product.warrantyInformation) {
+                <div class="info-card">
+                    <i class="pi pi-shield"></i>
+                    <strong>Warranty</strong>
+                    <p>{{ product.warrantyInformation }}</p>
+                </div>
+                }
+                @if (product.returnPolicy) {
+                <div class="info-card">
+                    <i class="pi pi-replay"></i>
+                    <strong>Returns</strong>
+                    <p>{{ product.returnPolicy }}</p>
+                </div>
+                }
+            </div>
+
+
+        </div>
+    </div>
+
+    <!-- Bottom: Customer Experience Section -->
+    <div class="details-blocks">
+        <section class="glass-section">
+            <div class="section-head">
+                <div class="dot"></div>
+                <h2>Customer Experience</h2>
+            </div>
+            <div class="reviews-container">
+                <div class="rating-summary">
+                    <span class="big-num">{{ product.rating.rate }}</span>
+                    <p-rating [ngModel]="product.rating.rate" [readonly]="true"></p-rating>
+                    <span class="review-count mt-3">From {{ product.rating.count }} reviews</span>
+                </div>
+
+                <div class="reviews-list">
+                    @if (product.reviews && product.reviews.length > 0) {
+                    @for (review of product.reviews; track review.reviewerEmail) {
+                    <div class="review-card">
+                        <div class="rev-top">
+                            <span class="rev-user">{{ review.reviewerName }}</span>
+                            <span class="rev-date">{{ review.date | date:'MMM dd, yyyy' }}</span>
+                        </div>
+                        <p-rating [ngModel]="review.rating" [readonly]="true" styleClass="mb-3"></p-rating>
+                        <p class="review-text">{{ review.comment }}</p>
+                    </div>
+                    }
+                    } @else {
+                    <div class="no-reviews">
+                        <p>No reviews yet for this product.</p>
+                    </div>
+                    }
+                </div>
+            </div>
+        </section>
+    </div>
+    }
+    }
+</div>

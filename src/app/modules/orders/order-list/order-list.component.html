@@ -1,0 +1,120 @@
+<div class="order-list-container">
+    <!-- Header Section -->
+    <div class="order-header">
+        <button class="back-link" (click)="goBack()">
+            <i class="pi pi-arrow-left"></i> Back to Shopping
+        </button>
+        <div class="header-main">
+            <h1 class="page-title">Your Orders</h1>
+            <p class="page-subtitle">Track and manage all your orders in one place</p>
+        </div>
+    </div>
+
+    <!-- Orders Content -->
+    <div class="orders-content">
+        @if (orders$ | async; as orders) {
+        @if (orders.length > 0) {
+        <div class="orders-grid">
+            @for (order of orders; track order.id) {
+            <div class="order-card glass-card">
+                <!-- Order Header -->
+                <div class="order-card-header">
+                    <div class="order-info">
+                        <h3 class="order-id">Order #{{ order.id }}</h3>
+                        <p class="order-date">{{ order.orderDate | date:'medium' }}</p>
+                    </div>
+                    <p-tag [value]="order.status" [severity]="getStatusSeverity(order.status)"
+                        styleClass="order-status-tag"></p-tag>
+                </div>
+
+                <!-- Order Details -->
+                <div class="order-details">
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="pi pi-shopping-cart"></i>
+                            Items
+                        </span>
+                        <span class="detail-value">{{ (order.items || order.products).length }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="pi pi-dollar"></i>
+                            Total
+                        </span>
+                        <span class="detail-value total-amount">{{ order.total | appCurrency }}</span>
+                    </div>
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="pi pi-map-marker"></i>
+                            Delivery to
+                        </span>
+                        <span class="detail-value">{{ order.shippingAddress.city }}, {{ order.shippingAddress.country
+                            }}</span>
+                    </div>
+                    @if (order.status.toLowerCase() === 'delivered') {
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="pi pi-check-circle"></i>
+                            Delivered on
+                        </span>
+                        <span class="detail-value success-text">{{ (order.estimatedDelivery || order.orderDate) |
+                            date:'mediumDate' }}</span>
+                    </div>
+                    } @else if (order.estimatedDelivery) {
+                    <div class="detail-row">
+                        <span class="detail-label">
+                            <i class="pi pi-calendar"></i>
+                            Estimated Delivery
+                        </span>
+                        <span class="detail-value">{{ order.estimatedDelivery | date:'mediumDate' }}</span>
+                    </div>
+                    }
+                </div>
+
+                <!-- Order Items Preview -->
+                <div class="order-items-preview">
+                    <div class="items-label">Order Items:</div>
+                    <div class="items-list">
+                        @for (item of (order.items || order.products).slice(0, 3); track item.productId) {
+                        <div class="item-preview">
+                            <img [src]="item.image" [alt]="item.title" class="item-image">
+                            <div class="item-info">
+                                <span class="item-title">{{ item.title }}</span>
+                                <span class="item-quantity">Qty: {{ item.quantity }}</span>
+                            </div>
+                        </div>
+                        }
+                        @if ((order.items || order.products).length > 3) {
+                        <div class="more-items">
+                            +{{ (order.items || order.products).length - 3 }} more item(s)
+                        </div>
+                        }
+                    </div>
+                </div>
+
+                <!-- Actions -->
+                <div class="order-actions">
+                    @if (order.status.toLowerCase() !== 'delivered') {
+                    <p-button label="Track Order" icon="pi pi-map-marker" styleClass="track-btn"
+                        (onClick)="trackOrder(order.id)"></p-button>
+                    }
+                </div>
+            </div>
+            }
+        </div>
+        } @else {
+        <div class="empty-orders glass-card">
+            <i class="pi pi-shopping-bag"></i>
+            <h2>No Orders Yet</h2>
+            <p>You haven't placed any orders yet. Start shopping to see your orders here!</p>
+            <p-button label="Start Shopping" icon="pi pi-shopping-cart" (onClick)="goBack()"></p-button>
+        </div>
+        }
+        } @else {
+        <div class="loading-state glass-card">
+            <i class="pi pi-spin pi-spinner"></i>
+            <p>Loading your orders...</p>
+        </div>
+        }
+    </div>
+</div>

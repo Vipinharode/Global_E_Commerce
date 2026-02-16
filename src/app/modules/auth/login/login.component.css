@@ -1,0 +1,439 @@
+.auth-container {
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-container::before {
+    content: '';
+    position: absolute;
+    top: -50%;
+    right: -50%;
+    width: 100%;
+    height: 100%;
+    background: radial-gradient(circle, rgba(255, 255, 255, 0.1) 0%, transparent 70%);
+    animation: float 6s ease-in-out infinite;
+}
+
+@keyframes float {
+
+    0%,
+    100% {
+        transform: translate(0, 0) rotate(0deg);
+    }
+
+    50% {
+        transform: translate(30px, 30px) rotate(5deg);
+    }
+}
+
+.auth-wrapper {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    max-width: 1200px;
+    width: 100%;
+    background: white;
+    border-radius: 24px;
+    overflow: hidden;
+    box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25),
+        0 30px 60px -30px rgba(0, 0, 0, 0.3);
+    position: relative;
+    z-index: 1;
+}
+
+/* Left Side - Branding */
+.auth-branding {
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    padding: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+}
+
+.auth-branding::before {
+    content: '';
+    position: absolute;
+    top: -100px;
+    left: -100px;
+    width: 300px;
+    height: 300px;
+    background: rgba(255, 255, 255, 0.1);
+    border-radius: 50%;
+}
+
+.auth-branding::after {
+    content: '';
+    position: absolute;
+    bottom: -150px;
+    right: -150px;
+    width: 400px;
+    height: 400px;
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 50%;
+}
+
+.branding-content {
+    position: relative;
+    z-index: 1;
+    color: white;
+}
+
+.logo-section {
+    margin-bottom: 2rem;
+}
+
+.logo-icon {
+    font-size: 4rem;
+    display: block;
+    margin-bottom: 1.5rem;
+    animation: pulse 2s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+    0%,
+    100% {
+        transform: scale(1);
+        opacity: 1;
+    }
+
+    50% {
+        transform: scale(1.05);
+        opacity: 0.9;
+    }
+}
+
+.logo-section h1 {
+    font-size: 2.5rem;
+    font-weight: 800;
+    margin: 0;
+    line-height: 1.2;
+}
+
+.tagline {
+    font-size: 1.1rem;
+    opacity: 0.95;
+    margin-bottom: 3rem;
+    line-height: 1.6;
+}
+
+.features-list {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.feature-item {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    font-weight: 500;
+}
+
+.feature-item i {
+    font-size: 1.5rem;
+    color: rgba(255, 255, 255, 0.9);
+}
+
+/* Right Side - Form */
+.auth-form-container {
+    padding: 4rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.auth-form-wrapper {
+    width: 100%;
+    max-width: 450px;
+}
+
+.form-header {
+    margin-bottom: 2.5rem;
+    text-align: center;
+}
+
+.form-header h2 {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #1e293b;
+    margin: 0 0 0.5rem;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+}
+
+.form-header p {
+    color: #64748b;
+    font-size: 1rem;
+    margin: 0;
+}
+
+.auth-form {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+}
+
+.form-field {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+}
+
+.form-field label {
+    font-weight: 700;
+    font-size: 0.9rem;
+    color: #475569;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+::ng-deep .form-field input,
+::ng-deep .form-field .p-password input {
+    padding: 0.875rem 1rem 0.875rem 3rem !important;
+    border-radius: 12px !important;
+    border: 2px solid #e2e8f0 !important;
+    font-size: 0.95rem !important;
+    transition: all 0.2s !important;
+}
+
+::ng-deep .form-field input:focus,
+::ng-deep .form-field .p-password input:focus {
+    border-color: var(--primary-color) !important;
+    box-shadow: 0 0 0 4px rgba(79, 70, 229, 0.1) !important;
+}
+
+::ng-deep .form-field .p-input-icon-left {
+    position: relative;
+    display: block;
+    width: 100%;
+}
+
+::ng-deep .form-field .p-input-icon-left i {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    left: 1rem !important;
+    color: #94a3b8 !important;
+    z-index: 1;
+}
+
+::ng-deep .form-field .p-password {
+    width: 100%;
+}
+
+::ng-deep .form-field .p-password .p-icon {
+    right: 1rem !important;
+    left: auto !important;
+    top: 50% !important;
+    margin-top: 0 !important;
+    transform: translateY(-50%) !important;
+    cursor: pointer;
+    position: absolute;
+    color: #94a3b8 !important;
+}
+
+/* Button Spacing */
+::ng-deep .p-button .p-button-icon-left {
+    margin-right: 0.75rem !important;
+}
+
+.form-options {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: -0.5rem;
+}
+
+.remember-me {
+    display: flex;
+    align-items: center;
+}
+
+::ng-deep .remember-me .p-checkbox-label {
+    font-size: 0.9rem !important;
+    color: #64748b !important;
+    font-weight: 500 !important;
+}
+
+.forgot-link {
+    font-size: 0.9rem;
+    color: var(--primary-color);
+    font-weight: 600;
+    text-decoration: none;
+    transition: color 0.2s;
+}
+
+.forgot-link:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Login Button */
+::ng-deep .login-btn.p-button {
+    padding: 0.875rem !important;
+    font-size: 1rem !important;
+    font-weight: 700 !important;
+    border-radius: 12px !important;
+    background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%) !important;
+    border: none !important;
+    box-shadow: 0 4px 14px 0 rgba(79, 70, 229, 0.35) !important;
+    transition: all 0.3s !important;
+}
+
+::ng-deep .login-btn.p-button:hover:not(:disabled) {
+    transform: translateY(-2px) !important;
+    box-shadow: 0 6px 20px 0 rgba(79, 70, 229, 0.45) !important;
+}
+
+::ng-deep .login-btn.p-button:active:not(:disabled) {
+    transform: translateY(0) !important;
+}
+
+/* Demo Section */
+.demo-section {
+    margin-top: 1rem;
+}
+
+.divider {
+    display: flex;
+    align-items: center;
+    text-align: center;
+    margin: 1.5rem 0;
+}
+
+.divider::before,
+.divider::after {
+    content: '';
+    flex: 1;
+    border-bottom: 1px solid #e2e8f0;
+}
+
+.divider span {
+    padding: 0 1rem;
+    color: #94a3b8;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+}
+
+.demo-buttons {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 0.75rem;
+}
+
+.demo-btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 0.5rem;
+    padding: 0.75rem 1rem;
+    border: 2px solid #e2e8f0;
+    border-radius: 10px;
+    background: white;
+    color: #475569;
+    font-size: 0.85rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.demo-btn:hover {
+    border-color: var(--primary-color);
+    color: var(--primary-color);
+    background: rgba(79, 70, 229, 0.05);
+    transform: translateY(-2px);
+}
+
+.demo-btn i {
+    font-size: 1.1rem;
+}
+
+/* Sign Up Link */
+.signup-link {
+    text-align: center;
+    margin-top: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid #e2e8f0;
+}
+
+.signup-link span {
+    color: #64748b;
+    font-size: 0.95rem;
+}
+
+.signup-link a {
+    color: var(--primary-color);
+    font-weight: 700;
+    text-decoration: none;
+    margin-left: 0.5rem;
+    transition: color 0.2s;
+}
+
+.signup-link a:hover {
+    color: var(--secondary-color);
+    text-decoration: underline;
+}
+
+/* Error Messages */
+::ng-deep p-message {
+    margin-bottom: 1rem;
+}
+
+::ng-deep .p-message {
+    border-radius: 10px !important;
+    font-size: 0.9rem !important;
+}
+
+small.p-error {
+    font-size: 0.85rem;
+    color: #ef4444;
+    margin-top: 0.25rem;
+    display: block;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+    .auth-wrapper {
+        grid-template-columns: 1fr;
+    }
+
+    .auth-branding {
+        display: none;
+    }
+
+    .auth-form-container {
+        padding: 3rem 2rem;
+    }
+}
+
+@media (max-width: 640px) {
+    .auth-container {
+        padding: 1rem;
+    }
+
+    .auth-form-container {
+        padding: 2rem 1.5rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.75rem;
+    }
+
+    .demo-buttons {
+        grid-template-columns: 1fr;
+    }
+}

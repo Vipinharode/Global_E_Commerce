@@ -1,0 +1,151 @@
+<div class="dashboard-container">
+  <!-- Navigation / Category Tabs -->
+  <nav class="category-nav">
+    <div class="tab-item" [class.active]="searchFilterService.selectedCategory() === 'All'"
+      (click)="filterByCategory('All')">
+      <div class="tab-circle all-circle">
+        <i class="pi pi-th-large"></i>
+      </div>
+      <span class="tab-label">All Items</span>
+    </div>
+
+    @for(tab of dynamicCategoryTabs(); track tab.name) {
+    <div class="tab-item" [class.active]="searchFilterService.selectedCategory() === tab.name"
+      (click)="filterByCategory(tab.name)">
+      <div class="tab-circle" [style.backgroundColor]="tab.color">
+        <i [class]="'pi ' + tab.icon" [style.color]="tab.textColor"></i>
+      </div>
+      <span class="tab-label">{{ tab.name | titlecase }}</span>
+    </div>
+    }
+  </nav>
+
+  <!-- Main Content -->
+  <main class="content-area">
+    <!-- Show Skeleton if loading AND no products -->
+    @if (loading() && filteredProducts().length === 0) {
+    <div class="showcase-skeleton">
+      <div class="products-grid">
+        @for (item of [1,2,3,4]; track item) {
+        <p-skeleton width="100%" height="350px" borderRadius="16px"></p-skeleton>
+        }
+      </div>
+    </div>
+    } @else {
+
+    @if (filteredProducts(); as products) {
+
+    <!-- SHOWCASE MODE -->
+    @if (searchFilterService.selectedCategory() === 'All' && !_searchTerm) {
+
+    @for (tab of dynamicCategoryTabs(); track tab.name) {
+    <section class="category-section">
+      <div class="section-top">
+        <div class="title-group">
+          <div class="mini-circle" [style.backgroundColor]="tab.color"></div>
+          <h2>{{ tab.name | titlecase }}</h2>
+        </div>
+        <button class="view-all-btn" (click)="filterByCategory(tab.name)">
+          Browse More <i class="pi pi-chevron-right"></i>
+        </button>
+      </div>
+
+      <div class="horizontal-scroll showcase-cards">
+        @for (product of getCategorySampleLimited(products, tab.name); track product.id) {
+        <!-- Detailed Product Card -->
+        <div class="product-card featured-card" (click)="viewProduct(product.id)">
+          <div class="wishlist-overlay">
+            <button class="wishlist-btn" [class.active]="isInWatchlist(product.id)"
+              (click)="toggleWatchlist(product, $event)">
+              <i [class]="isInWatchlist(product.id) ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
+            </button>
+          </div>
+
+          <div class="img-container">
+            <img [src]="product.image" [alt]="product.title" loading="lazy" />
+            <div class="quick-action">
+              <p-button icon="pi pi-shopping-cart" [rounded]="true" (onClick)="addToCart(product, $event)"
+                [disabled]="product.stock === 0"></p-button>
+            </div>
+          </div>
+
+          <div class="info-container">
+            <h3 class="title" [title]="product.title">{{ product.title }}</h3>
+
+            <div class="meta-row">
+              <p-rating [(ngModel)]="product.rating.rate" [readonly]="true"></p-rating>
+              <span class="reviews">({{ product.rating.count }})</span>
+            </div>
+
+            <div class="price-action">
+              <span class="price-text">{{ product.price | appCurrency }}</span>
+              <div class="flex-spacer"></div>
+              <p-button label="Buy Now" icon="pi pi-bolt" styleClass="buy-now-standard"
+                (onClick)="buyNow(product, $event)" [disabled]="product.stock === 0"></p-button>
+            </div>
+          </div>
+        </div>
+        }
+      </div>
+    </section>
+    }
+
+    } @else {
+    <!-- RESULTS/FILTERED MODE -->
+    <div class="results-header">
+      <h3>{{ searchFilterService.selectedCategory() === 'All' ? 'Everything' :
+        (searchFilterService.selectedCategory() | titlecase) }}</h3>
+      <span class="count-badge">{{ products.length }} items</span>
+    </div>
+
+    <div class="products-grid">
+      @for (product of products; track product.id) {
+      <div class="product-card standard-card" (click)="viewProduct(product.id)">
+        <div class="wishlist-overlay">
+          <button class="wishlist-btn" [class.active]="isInWatchlist(product.id)"
+            (click)="toggleWatchlist(product, $event)">
+            <i [class]="isInWatchlist(product.id) ? 'pi pi-heart-fill' : 'pi pi-heart'"></i>
+          </button>
+        </div>
+        <div class="img-container">
+          <img [src]="product.image" [alt]="product.title" loading="lazy" />
+        </div>
+        <div class="info-container">
+          <h3 class="title" [title]="product.title">{{ product.title }}</h3>
+          <div class="meta-row">
+            <p-rating [(ngModel)]="product.rating.rate" [readonly]="true"></p-rating>
+            <span class="reviews">{{ product.rating.count }}</span>
+          </div>
+          <div class="price-action">
+            <span class="price-text">{{ product.price | appCurrency }}</span>
+            <div class="flex-spacer"></div>
+            <p-button label="Buy Now" icon="pi pi-bolt" styleClass="buy-now-standard"
+              (onClick)="buyNow(product, $event)" [disabled]="product.stock === 0"></p-button>
+            <p-button icon="pi pi-shopping-cart" size="small" [rounded]="true" (onClick)="addToCart(product, $event)"
+              [disabled]="product.stock === 0"></p-button>
+          </div>
+        </div>
+      </div>
+      } @empty {
+      <div class="empty-not-found">
+        <i class="pi pi-search-minus"></i>
+        <p>No matches for "{{ _searchTerm }}"</p>
+        <span class="sub-text">We couldn't find what you're looking for. Try a different keyword or category.</span>
+      </div>
+      }
+    </div>
+    }
+
+    }
+    <!-- Loading More -->
+    @if (loading()) {
+    <div class="load-more-container"
+      style="display: flex; justify-content: center; align-items: center; padding: 2rem; width: 100%; color: var(--text-color-secondary);">
+      <i class="pi pi-spin pi-spinner" style="font-size: 1.5rem; margin-right: 0.8rem;"></i>
+      <span style="font-weight: 500;">Loading more products...</span>
+    </div>
+    }
+
+    }
+  </main>
+</div>

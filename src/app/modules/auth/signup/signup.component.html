@@ -1,0 +1,199 @@
+<div class="auth-container">
+    <div class="auth-wrapper">
+        <!-- Left Side - Branding -->
+        <div class="auth-branding">
+            <div class="branding-content">
+                <div class="logo-section">
+                    <i class="pi pi-user-plus logo-icon"></i>
+                    <h1>Join Us Today</h1>
+                </div>
+                <p class="tagline">Create your account and start shopping with exclusive benefits</p>
+
+                <div class="benefits-list">
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="pi pi-shopping-cart"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h3>Easy Shopping</h3>
+                            <p>Browse thousands of products</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="pi pi-shield"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h3>Secure Payments</h3>
+                            <p>Your data is always protected</p>
+                        </div>
+                    </div>
+                    <div class="benefit-item">
+                        <div class="benefit-icon">
+                            <i class="pi pi-truck"></i>
+                        </div>
+                        <div class="benefit-text">
+                            <h3>Fast Delivery</h3>
+                            <p>Quick and reliable shipping</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Right Side - Signup Form -->
+        <div class="auth-form-container">
+            <div class="auth-form-wrapper">
+                <div class="form-header">
+                    <h2>Create Account</h2>
+                    <p>Sign up to get started</p>
+                </div>
+
+                @if (error$ | async; as error) {
+                <p-message severity="error" [text]="error" styleClass="w-full mb-4"></p-message>
+                }
+
+                <form [formGroup]="signupForm" (ngSubmit)="onSubmit()" class="auth-form">
+                    <!-- Name Fields -->
+                    <div class="name-row">
+                        <div class="form-field">
+                            <label for="firstName">First Name</label>
+                            <input pInputText id="firstName" formControlName="firstName"
+                                placeholder="Enter your first name" class="w-full"
+                                [class.p-invalid]="firstName?.invalid && firstName?.touched" />
+                            @if (firstName?.invalid && firstName?.touched) {
+                            <small class="p-error">
+                                @if (firstName?.errors?.['required']) {
+                                First name is required
+                                } @else if (firstName?.errors?.['minlength']) {
+                                Minimum 2 characters
+                                }
+                            </small>
+                            }
+                        </div>
+
+                        <div class="form-field">
+                            <label for="lastName">Last Name</label>
+                            <input pInputText id="lastName" formControlName="lastName"
+                                placeholder="Enter your last name" class="w-full"
+                                [class.p-invalid]="lastName?.invalid && lastName?.touched" />
+                            @if (lastName?.invalid && lastName?.touched) {
+                            <small class="p-error">
+                                @if (lastName?.errors?.['required']) {
+                                Last name is required
+                                } @else if (lastName?.errors?.['minlength']) {
+                                Minimum 2 characters
+                                }
+                            </small>
+                            }
+                        </div>
+                    </div>
+
+                    <!-- Username Field -->
+                    <div class="form-field">
+                        <label for="username">Username</label>
+                        <span class="p-input-icon-left w-full">
+                            <i class="pi pi-user"></i>
+                            <input pInputText id="username" formControlName="username" placeholder="Enter your username"
+                                class="w-full" [class.p-invalid]="username?.invalid && username?.touched" />
+                        </span>
+                        @if (username?.invalid && username?.touched) {
+                        <small class="p-error">
+                            @if (username?.errors?.['required']) {
+                            Username is required
+                            } @else if (username?.errors?.['minlength']) {
+                            Minimum 3 characters
+                            } @else if (username?.errors?.['pattern']) {
+                            Only letters, numbers, and underscores
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <!-- Email Field -->
+                    <div class="form-field">
+                        <label for="email">Email Address</label>
+                        <span class="p-input-icon-left w-full">
+                            <i class="pi pi-envelope"></i>
+                            <input pInputText id="email" type="email" formControlName="email"
+                                placeholder="Enter your email address" class="w-full"
+                                [class.p-invalid]="email?.invalid && email?.touched" />
+                        </span>
+                        @if (email?.invalid && email?.touched) {
+                        <small class="p-error">
+                            @if (email?.errors?.['required']) {
+                            Email is required
+                            } @else if (email?.errors?.['email']) {
+                            Enter a valid email address
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <!-- Role Field -->
+                    <div class="form-field">
+                        <label for="role">Account Type</label>
+                        <p-select [options]="roles" formControlName="role" optionLabel="label" optionValue="value"
+                            placeholder="Select a role" styleClass="w-full"></p-select>
+                    </div>
+
+                    <!-- Password Field -->
+                    <div class="form-field">
+                        <label for="password">Password</label>
+                        <span class="p-input-icon-left w-full">
+                            <i class="pi pi-lock"></i>
+                            <p-password id="password" formControlName="password" placeholder="Enter your password"
+                                [toggleMask]="true" [feedback]="true" styleClass="w-full"
+                                [inputStyleClass]="'w-full ' + (password?.invalid && password?.touched ? 'p-invalid' : '')"></p-password>
+                        </span>
+                        @if (password?.invalid && password?.touched) {
+                        <small class="p-error">
+                            @if (password?.errors?.['required']) {
+                            Password is required
+                            } @else if (password?.errors?.['minlength']) {
+                            Minimum 6 characters
+                            } @else if (password?.errors?.['weakPassword']) {
+                            Must contain uppercase, lowercase, and number
+                            }
+                        </small>
+                        }
+                    </div>
+
+                    <!-- Confirm Password Field -->
+                    <div class="form-field">
+                        <label for="confirmPassword">Confirm Password</label>
+                        <span class="p-input-icon-left w-full">
+                            <i class="pi pi-lock"></i>
+                            <p-password id="confirmPassword" formControlName="confirmPassword"
+                                placeholder="Confirm your password" [toggleMask]="true" [feedback]="false"
+                                styleClass="w-full"
+                                [inputStyleClass]="'w-full ' + (confirmPassword?.invalid && confirmPassword?.touched ? 'p-invalid' : '')"></p-password>
+                        </span>
+                        @if (confirmPassword?.invalid && confirmPassword?.touched) {
+                        <small class="p-error">
+                            @if (confirmPassword?.errors?.['required']) {
+                            Please confirm your password
+                            }
+                        </small>
+                        }
+                        @if (signupForm.errors?.['passwordMismatch'] && confirmPassword?.touched) {
+                        <small class="p-error">
+                            Passwords do not match
+                        </small>
+                        }
+                    </div>
+
+                    <!-- Submit Button -->
+                    <p-button type="submit" label="Create Account" icon="pi pi-user-plus" styleClass="w-full signup-btn"
+                        [loading]="loading$ | async" [disabled]="loading$ | async"></p-button>
+
+                    <!-- Login Link -->
+                    <div class="login-link">
+                        <span>Already have an account?</span>
+                        <a routerLink="/auth/login">Sign In</a>
+                    </div>
+                </form>
+            </div>
+        </div>
+    </div>
+</div>
