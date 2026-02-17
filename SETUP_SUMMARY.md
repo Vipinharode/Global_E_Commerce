@@ -35,8 +35,8 @@ ng version
 ### Step 1: Clone the Repository
 Clone the project from GitHub to your local machine:
 ```CMD
-git clone <repository-url>
-cd Global_E-Commerce_Platform
+git clone https://github.com/Vipinharode/Global_E_Commerce.git
+cd Global_E_Commerce
 ```
 
 ### Step 2: Install Dependencies
