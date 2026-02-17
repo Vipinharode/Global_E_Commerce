@@ -40,13 +40,12 @@
     background: white;
     border-radius: 24px;
     overflow: hidden;
-    box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25),
-        0 30px 60px -30px rgba(0, 0, 0, 0.3);
+    box-shadow: 0 50px 100px -20px rgba(50, 50, 93, 0.25), 0 30px 60px -30px rgba(0, 0, 0, 0.3);
     position: relative;
     z-index: 1;
 }
 
-/* Left Side - Branding */
+/* Branding */
 .auth-branding {
     background: linear-gradient(135deg, var(--primary-color) 0%, var(--secondary-color) 100%);
     padding: 4rem;
@@ -143,7 +142,7 @@
     color: rgba(255, 255, 255, 0.9);
 }
 
-/* Right Side - Form */
+/* Form */
 .auth-form-container {
     padding: 4rem;
     display: flex;
@@ -244,7 +243,6 @@
     color: #94a3b8 !important;
 }
 
-/* Button Spacing */
 ::ng-deep .p-button .p-button-icon-left {
     margin-right: 0.75rem !important;
 }
@@ -435,5 +433,25 @@ small.p-error {
 
     .demo-buttons {
         grid-template-columns: 1fr;
+    }
+}
+
+@media (max-width: 480px) {
+    .auth-form-container {
+        padding: 1.5rem 1rem;
+    }
+
+    .form-header h2 {
+        font-size: 1.5rem;
+    }
+
+    .form-field label {
+        font-size: 0.813rem;
+    }
+
+    ::ng-deep .form-field input,
+    ::ng-deep .form-field .p-password input {
+        padding: 0.75rem 1rem 0.75rem 2.75rem !important;
+        font-size: 0.875rem !important;
     }
 }

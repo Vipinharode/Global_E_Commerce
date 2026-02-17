@@ -1,3 +1,4 @@
+/* App Container */
 .app-container {
     min-height: 100vh;
     display: flex;
@@ -5,7 +6,7 @@
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
 }
 
-/* Header Styles */
+/* Header */
 .app-header {
     position: sticky;
     top: 0;
@@ -67,7 +68,7 @@
     font-weight: 500;
 }
 
-/* Filters in Header */
+/* Header Filters */
 .header-filters {
     display: flex;
     align-items: center;
@@ -115,7 +116,7 @@
     align-items: center;
 }
 
-/* Standard PrimeNG Select Styles */
+/* PrimeNG Select Styles */
 ::ng-deep .p-select {
     border-radius: 12px !important;
     background: #ffffff !important;
@@ -124,7 +125,7 @@
     min-width: 160px !important;
     display: flex !important;
     align-items: center !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: var(--transition-fast) !important;
     cursor: pointer !important;
 }
 
@@ -152,14 +153,12 @@
     color: #94a3b8 !important;
 }
 
-/* Dropdown Panel Styling - Specific for p-select */
+/* Dropdown Panel */
 ::ng-deep .p-select-panel {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
     border-radius: 14px !important;
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15),
-        0 10px 10px -5px rgba(0, 0, 0, 0.08),
-        0 0 0 1px rgba(79, 70, 229, 0.05) !important;
+    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.15), 0 10px 10px -5px rgba(0, 0, 0, 0.08), 0 0 0 1px rgba(79, 70, 229, 0.05) !important;
     margin-top: 8px !important;
     padding: 0.5rem !important;
     z-index: 2200 !important;
@@ -168,7 +167,6 @@
     overflow: auto !important;
 }
 
-/* User Menu Popover - Different from select panels */
 ::ng-deep .p-popover {
     background: #ffffff !important;
     border: 1px solid #e2e8f0 !important;
@@ -179,7 +177,6 @@
     z-index: 2200 !important;
 }
 
-/* Specific p-popover content reset */
 ::ng-deep .p-popover-content {
     background: transparent !important;
     padding: 0 !important;
@@ -188,7 +185,6 @@
 ::ng-deep .p-popover:before,
 ::ng-deep .p-popover:after {
     display: none !important;
-    /* Hide default arrow to keep it clean */
 }
 
 ::ng-deep .p-select-list {
@@ -198,7 +194,6 @@
     overflow-y: auto !important;
 }
 
-/* Scrollbar styling for dropdown */
 ::ng-deep .p-select-list::-webkit-scrollbar {
     width: 6px;
 }
@@ -224,7 +219,7 @@
     font-size: 0.875rem !important;
     font-weight: 600 !important;
     color: #475569 !important;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: var(--transition-fast) !important;
     background: #ffffff !important;
     cursor: pointer !important;
 }
@@ -246,7 +241,6 @@
     opacity: 0.95;
 }
 
-/* Internal alignment for currency template */
 ::ng-deep .header-select .fi {
     width: 20px !important;
     height: 15px !important;
@@ -261,14 +255,12 @@
     align-items: center;
 }
 
-/* Specific fix for dropdown flex items */
 ::ng-deep .p-select-item .flex {
     display: flex !important;
     align-items: center !important;
     gap: 0.875rem !important;
 }
 
-/* Flag icons in dropdown items */
 ::ng-deep .p-select-item .fi {
     width: 24px !important;
     height: 18px !important;
@@ -277,7 +269,6 @@
     flex-shrink: 0;
 }
 
-/* Empty state for select */
 ::ng-deep .p-select-empty-message {
     padding: 1rem !important;
     text-align: center !important;
@@ -448,25 +439,22 @@
     margin: 0.25rem 0;
 }
 
-/* 6. Buy Now Standard Button Styling - Light Theme */
+/* Buy Now Standard Button */
 ::ng-deep .buy-now-standard.p-button {
     background: rgba(79, 70, 229, 0.08) !important;
-    /* Very light blue tint */
     border: 1px solid rgba(79, 70, 229, 0.1) !important;
     border-radius: 10px !important;
     padding: 0.5rem 1.25rem !important;
     font-size: 0.85rem !important;
     font-weight: 800 !important;
     color: var(--primary-color) !important;
-    /* Bold blue text */
     height: 38px !important;
-    transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1) !important;
+    transition: var(--transition) !important;
     box-shadow: none !important;
 }
 
 ::ng-deep .buy-now-standard.p-button:hover {
     background: var(--primary-color) !important;
-    /* Fill on hover */
     color: white !important;
     transform: translateY(-2px) !important;
     box-shadow: 0 8px 20px rgba(79, 70, 229, 0.2) !important;
@@ -485,70 +473,7 @@
     flex: 1;
 }
 
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .header-content {
-        padding: 1rem;
-    }
-
-    .nav-section {
-        gap: 1rem;
-    }
-
-    .nav-link span {
-        display: none;
-    }
-
-    .nav-link {
-        padding: 0.75rem;
-    }
-
-    .user-name {
-        display: none;
-    }
-}
-
-@media (max-width: 768px) {
-    .app-header {
-        margin: 0.5rem 0.5rem 0 0.5rem;
-    }
-
-    .header-content {
-        flex-wrap: wrap;
-        gap: 1rem;
-    }
-
-    .logo-section {
-        flex: 1;
-    }
-
-    .nav-section {
-        order: 3;
-        width: 100%;
-        justify-content: space-around;
-        padding-top: 1rem;
-        border-top: 1px solid #E5E7EB;
-    }
-
-    .user-section {
-        order: 2;
-    }
-
-    .main-content {
-        padding: 1rem 0.5rem;
-    }
-
-    .app-footer {
-        margin: 0 0.5rem 0.5rem 0.5rem;
-    }
-
-    .footer-content {
-        grid-template-columns: 1fr;
-        padding: 2rem 1rem;
-    }
-}
-
-/* Watchlist Popup Styling */
+/* Watchlist Popup */
 .watchlist-popup {
     width: 350px;
     max-height: 500px;
@@ -676,7 +601,7 @@
     color: #ef4444 !important;
 }
 
-/* User Menu Dropdown Styles */
+/* User Menu Dropdown */
 .user-chevron {
     font-size: 0.75rem;
     color: #94a3b8;
@@ -742,7 +667,7 @@
     font-weight: 600;
     color: #475569;
     cursor: pointer;
-    transition: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    transition: var(--transition-fast);
     text-align: left;
     font-family: inherit;
 }
@@ -845,8 +770,103 @@
     margin-top: 0.25rem;
 }
 
-/* Responsive updates for auth buttons */
+/* Responsive Design */
+@media (max-width: 1024px) {
+    .header-content {
+        padding: 1rem;
+    }
+
+    .header-filters {
+        margin: 0 2rem;
+    }
+
+    .nav-section {
+        gap: 1rem;
+    }
+
+    .nav-link span {
+        display: none;
+    }
+
+    .nav-link {
+        padding: 0.75rem;
+    }
+
+    .user-name {
+        display: none;
+    }
+}
+
+@media (max-width: 768px) {
+    .app-header {
+        margin: 0.5rem 0.5rem 0 0.5rem;
+    }
+
+    .header-content {
+        flex-wrap: wrap;
+        gap: 1rem;
+    }
+
+    .header-filters {
+        order: 1;
+        width: 100%;
+        margin: 0;
+        flex-wrap: wrap;
+    }
+
+    .filter-actions {
+        width: 100%;
+        justify-content: space-between;
+    }
+
+    .logo-section {
+        flex: 1;
+        order: 0;
+    }
+
+    .nav-section {
+        order: 3;
+        width: 100%;
+        justify-content: space-around;
+        padding-top: 1rem;
+        border-top: 1px solid #E5E7EB;
+    }
+
+    .user-section {
+        order: 2;
+    }
+
+    .main-content {
+        padding: 1rem 0.5rem;
+    }
+
+    .app-footer {
+        margin: 0 0.5rem 0.5rem 0.5rem;
+    }
+
+    .footer-content {
+        grid-template-columns: 1fr;
+        padding: 2rem 1rem;
+    }
+
+    .watchlist-popup {
+        width: 300px;
+    }
+}
+
 @media (max-width: 640px) {
+    .header-content {
+        padding: 0.875rem 1rem;
+    }
+
+    .logo-main {
+        font-size: 1.25rem;
+    }
+
+    .logo-sub {
+        font-size: 0.75rem;
+    }
+
     .auth-buttons {
         gap: 0.5rem;
     }
@@ -859,42 +879,36 @@
     .signup-btn,
     .login-btn {
         padding: 0;
-        border-radius: 50%;
         width: 36px;
         height: 36px;
+        border-radius: 50%;
         justify-content: center;
     }
 
-    /* Force icon size */
-    .signup-btn::before {
-        content: '\e9ba';
-        /* pi-user-plus */
-        font-family: 'primeicons';
-        font-size: 1.1rem;
+    ::ng-deep .p-select {
+        min-width: 120px !important;
     }
 
-    /* Remove original content from button to just show icon via ::before or handle differently */
-    /* Actually better approach: */
+    .footer-bottom {
+        padding: 1rem;
+        font-size: 0.875rem;
+    }
 }
 
-@media (max-width: 640px) {
-
-    .signup-btn span,
-    .login-btn span {
-        display: none;
+@media (max-width: 480px) {
+    .logo i {
+        font-size: 2rem;
     }
 
-    .signup-btn,
-    .login-btn {
-        padding: 0;
-        width: 36px;
-        height: 36px;
-        border-radius: 50%;
-        justify-content: center;
+    .logo-main {
+        font-size: 1.125rem;
     }
 
-    .signup-btn i::before {
-        content: "\e9ba";
-        /* pi-user-plus */
+    .nav-link {
+        padding: 0.5rem;
+    }
+
+    .nav-link i {
+        font-size: 1.125rem;
     }
 }

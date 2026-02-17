@@ -1,13 +1,15 @@
 /* Global Styles for E-Commerce Platform */
-/* PrimeNG styles are imported via angular.json */
 
-* {
+*,
+*::before,
+*::after {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
 }
 
 :root {
+    /* Colors */
     --primary-color: #4F46E5;
     --secondary-color: #7C3AED;
     --success-color: #10B981;
@@ -16,9 +18,27 @@
     --info-color: #3B82F6;
     --dark-color: #1F2937;
     --light-color: #F9FAFB;
+
+    /* Border & Radius */
     --border-radius: 12px;
+    --border-radius-sm: 8px;
+    --border-radius-lg: 20px;
+    --border-radius-xl: 24px;
+
+    /* Shadows */
     --box-shadow: 0 4px 6px -1px rgba(0, 0, 0, 0.1), 0 2px 4px -1px rgba(0, 0, 0, 0.06);
+    --box-shadow-lg: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+
+    /* Transitions */
     --transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    --transition-fast: all 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+
+    /* Spacing */
+    --spacing-xs: 0.5rem;
+    --spacing-sm: 1rem;
+    --spacing-md: 1.5rem;
+    --spacing-lg: 2rem;
+    --spacing-xl: 3rem;
 }
 
 body {
@@ -26,6 +46,8 @@ body {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     min-height: 100vh;
     color: var(--dark-color);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
 }
 
 /* Custom scrollbar */
@@ -85,6 +107,12 @@ body {
     }
 }
 
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
+}
+
 .fade-in {
     animation: fadeIn 0.6s ease-out;
 }
@@ -93,21 +121,20 @@ body {
     animation: slideIn 0.6s ease-out;
 }
 
-/* Custom Card Styles */
+/* Card Styles */
 .custom-card {
     background: white;
     border-radius: var(--border-radius);
-    padding: 1.5rem;
+    padding: var(--spacing-md);
     box-shadow: var(--box-shadow);
     transition: var(--transition);
 }
 
 .custom-card:hover {
     transform: translateY(-5px);
-    box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+    box-shadow: var(--box-shadow-lg);
 }
 
-/* Glassmorphism effect */
 .glass-card {
     background: rgba(255, 255, 255, 0.25);
     backdrop-filter: blur(10px);
@@ -140,13 +167,7 @@ body {
     animation: spin 1s ease-in-out infinite;
 }
 
-@keyframes spin {
-    to {
-        transform: rotate(360deg);
-    }
-}
-
-/* Utility classes */
+/* Utility classes - Text Alignment */
 .text-center {
     text-align: center;
 }
@@ -159,54 +180,56 @@ body {
     text-align: right;
 }
 
+/* Utility classes - Spacing */
 .mt-1 {
-    margin-top: 0.5rem;
+    margin-top: var(--spacing-xs);
 }
 
 .mt-2 {
-    margin-top: 1rem;
+    margin-top: var(--spacing-sm);
 }
 
 .mt-3 {
-    margin-top: 1.5rem;
+    margin-top: var(--spacing-md);
 }
 
 .mt-4 {
-    margin-top: 2rem;
+    margin-top: var(--spacing-lg);
 }
 
 .mb-1 {
-    margin-bottom: 0.5rem;
+    margin-bottom: var(--spacing-xs);
 }
 
 .mb-2 {
-    margin-bottom: 1rem;
+    margin-bottom: var(--spacing-sm);
 }
 
 .mb-3 {
-    margin-bottom: 1.5rem;
+    margin-bottom: var(--spacing-md);
 }
 
 .mb-4 {
-    margin-bottom: 2rem;
+    margin-bottom: var(--spacing-lg);
 }
 
 .p-1 {
-    padding: 0.5rem;
+    padding: var(--spacing-xs);
 }
 
 .p-2 {
-    padding: 1rem;
+    padding: var(--spacing-sm);
 }
 
 .p-3 {
-    padding: 1.5rem;
+    padding: var(--spacing-md);
 }
 
 .p-4 {
-    padding: 2rem;
+    padding: var(--spacing-lg);
 }
 
+/* Utility classes - Flexbox */
 .flex {
     display: flex;
 }
@@ -219,22 +242,27 @@ body {
     justify-content: center;
 }
 
+.justify-between {
+    justify-content: space-between;
+}
+
 .align-center {
     align-items: center;
 }
 
 .gap-1 {
-    gap: 0.5rem;
+    gap: var(--spacing-xs);
 }
 
 .gap-2 {
-    gap: 1rem;
+    gap: var(--spacing-sm);
 }
 
 .gap-3 {
-    gap: 1.5rem;
+    gap: var(--spacing-md);
 }
 
+/* Utility classes - Sizing */
 .w-full {
     width: 100%;
 }
@@ -243,9 +271,42 @@ body {
     height: 100%;
 }
 
-/* Responsive */
+/* Responsive breakpoints */
+@media (max-width: 1280px) {
+    :root {
+        --spacing-xl: 2.5rem;
+    }
+}
+
+@media (max-width: 1024px) {
+    :root {
+        --spacing-lg: 1.75rem;
+        --spacing-xl: 2rem;
+    }
+}
+
 @media (max-width: 768px) {
+    :root {
+        --spacing-md: 1.25rem;
+        --spacing-lg: 1.5rem;
+        --spacing-xl: 2rem;
+    }
+
     .custom-card {
-        padding: 1rem;
+        padding: var(--spacing-sm);
+    }
+}
+
+@media (max-width: 640px) {
+    :root {
+        --spacing-sm: 0.875rem;
+        --spacing-md: 1rem;
+        --spacing-lg: 1.25rem;
+    }
+}
+
+@media (max-width: 480px) {
+    body {
+        font-size: 14px;
     }
 }
