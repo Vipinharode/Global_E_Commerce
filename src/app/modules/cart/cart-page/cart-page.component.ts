@@ -113,7 +113,7 @@ export class CartPageComponent implements OnInit {
                 city: 'New York',
                 state: 'NY',
                 zipCode: '10001',
-                country: 'United States',
+                country: 'USA',
                 phone: '+1 (555) 123-4567'
             },
             trackingNumber: `TRK${orderId}`,

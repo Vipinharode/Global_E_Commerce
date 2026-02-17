@@ -70,6 +70,13 @@ export class AdminService {
                 const deletedStr = localStorage.getItem(this.deletedUsersKey);
                 const deletedIds: number[] = deletedStr ? JSON.parse(deletedStr) : [];
 
+                // Normalization helper
+                const normalizeCountry = (c: string) => {
+                    if (!c) return 'USA';
+                    if (c === 'United States' || c === 'United State') return 'USA';
+                    return c;
+                };
+
                 const cartsList = carts?.carts || [];
                 const usersList = usersAll?.users || [];
                 const productsList = products?.products || [];
@@ -124,7 +131,8 @@ export class AdminService {
                 const countryMap = new Map<string, number>();
                 cartsList.forEach((cart: any) => {
                     const user = userMap.get(cart.userId);
-                    const location = user?.address?.country || user?.address?.state || 'USA';
+                    const rawLocation = user?.address?.country || user?.address?.state || 'USA';
+                    const location = normalizeCountry(rawLocation);
                     countryMap.set(location, (countryMap.get(location) || 0) + 1);
                 });
 
@@ -195,24 +203,32 @@ export class AdminService {
                     }
                 ];
 
-                const mappedUsers = filteredUsers.map((u: any) => ({
-                    id: u.id,
-                    username: u.username,
-                    email: u.email,
-                    firstName: u.firstName,
-                    lastName: u.lastName,
-                    gender: u.gender,
-                    image: u.image,
-                    role: (u.username === 'emilys' || u.username === 'vipin') ? 'admin' : 'customer',
-                    country: (u.username === 'emilys') ? 'India' : (u.address?.country || u.address?.state || 'USA')
-                }));
+                const mappedUsers = filteredUsers.map((u: any) => {
+                    const rawCountry = (u.username === 'emilys') ? 'India' : (u.address?.country || u.address?.state || 'USA');
+                    return {
+                        id: u.id,
+                        username: u.username,
+                        email: u.email,
+                        firstName: u.firstName,
+                        lastName: u.lastName,
+                        gender: u.gender,
+                        image: u.image,
+                        role: (u.username === 'emilys' || u.username === 'vipin') ? 'admin' : 'customer',
+                        country: normalizeCountry(rawCountry)
+                    };
+                });
 
                 // 8. Integrate Local Users who signed up recently
                 const localUsersKey = 'local_signup_users';
                 const localUsersStr = localStorage.getItem(localUsersKey);
                 const localUsers: any[] = localUsersStr ? JSON.parse(localUsersStr) : [];
-                const filteredCustomUsers = customUsers.filter(u => !deletedIds.includes(u.id));
-                const filteredLocalUsers = localUsers.filter(u => !deletedIds.includes(u.id));
+                const filteredCustomUsers = customUsers
+                    .filter(u => !deletedIds.includes(u.id))
+                    .map(u => ({ ...u, country: normalizeCountry(u.country) }));
+
+                const filteredLocalUsers = localUsers
+                    .filter(u => !deletedIds.includes(u.id))
+                    .map(u => ({ ...u, country: normalizeCountry(u.country) }));
 
                 const recentUsers = [...filteredLocalUsers, ...filteredCustomUsers, ...mappedUsers]
                     .sort((a: any, b: any) => {
