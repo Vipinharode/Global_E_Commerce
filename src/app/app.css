@@ -784,7 +784,7 @@
         gap: 1rem;
     }
 
-    .nav-link .nav-text {
+    .nav-link span {
         display: none;
     }
 

@@ -17,10 +17,11 @@ export const authInterceptor: HttpInterceptorFn = (req: HttpRequest<unknown>, ne
         '/auth/refresh'
     ];
 
-    // Check if request is for a public endpoint
+    // Check if request is for a public endpoint or an external API
     const isPublic = publicEndpoints.some(endpoint => req.url.includes(endpoint));
+    const isDummyJson = req.url.includes('dummyjson.com');
 
-    if (accessToken && !isPublic) {
+    if (accessToken && !isPublic && isDummyJson) {
         req = addTokenHeader(req, accessToken);
     }
 
